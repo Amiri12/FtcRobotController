@@ -177,7 +177,7 @@ public class person2 extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-        int pos = 0;
+        int pos = -400;
         boolean flag = true;
         boolean lock = false;
         double Lval = 0;
@@ -203,7 +203,14 @@ public class person2 extends LinearOpMode {
             double Ltrig = gamepad2.left_trigger;
             boolean modF = gamepad1.left_bumper;
             double mod = 1.0;
-            
+            double mod2 = 1.0;double mod2 = 1.0;
+
+            // Decrease mod2 in proportion to gamepad1.right_trigger
+            mod2 -= gamepad1.right_trigger * 0.4; // You can adjust the multiplier as needed
+
+            // Ensure mod2 does not go below 0
+            mod2 = Math.max(mod2, 0.0);
+
             //gamepad2.left_bumper;
             boolean pick = gamepad2.right_bumper;
             double gate = gamepad2.right_trigger + 0.5;
@@ -399,10 +406,10 @@ public class person2 extends LinearOpMode {
             
             
             
-            leftFrontDrive.setPower(leftFrontPower*mod);
-            rightFrontDrive.setPower(rightFrontPower*mod);
-            leftBackDrive.setPower(leftBackPower*mod);
-            rightBackDrive.setPower(rightBackPower*mod);
+            leftFrontDrive.setPower(leftFrontPower*mod*mod2);
+            rightFrontDrive.setPower(rightFrontPower*mod*mod2);
+            leftBackDrive.setPower(leftBackPower*mod*mod2);
+            rightBackDrive.setPower(rightBackPower*mod*mod2);
             
             lift.setPower(liftPower);
            

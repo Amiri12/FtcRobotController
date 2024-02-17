@@ -66,7 +66,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot: Nonsense Drive By Encoder", group="Robot")
+@Autonomous(name="Far Right Smart", group="Robot")
 
 
 public class NonsenseTime extends LinearOpMode {
@@ -126,7 +126,7 @@ public class NonsenseTime extends LinearOpMode {
         LeftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         RightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         DropperR.setDirection(Servo.Direction.REVERSE);
-        
+
 
 
         LeftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -136,7 +136,7 @@ public class NonsenseTime extends LinearOpMode {
         RightBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
         wristMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
-      
+
         LeftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LeftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -171,7 +171,7 @@ public class NonsenseTime extends LinearOpMode {
         sleep (500);
         driveLeft(sqr);
         */
-        
+
         int tar = LeftFrontDrive.getCurrentPosition() + 1500;
         int pos = LeftFrontDrive.getCurrentPosition();
         int star = LeftFrontDrive.getCurrentPosition();
@@ -185,7 +185,7 @@ public class NonsenseTime extends LinearOpMode {
         telemetry.addData("DRF",DRF);
         telemetry.addData("state", state);
         telemetry.addData("senR", Double.isNaN(senR.getDistance(DistanceUnit.CM)));
-        
+
         telemetry.update();
         sleep(1000);
         while(DLF && DTF && CRF && DRF && CLF){
@@ -204,7 +204,7 @@ public class NonsenseTime extends LinearOpMode {
             DRF = Double.isNaN(senR.getDistance(DistanceUnit.CM));
             DTF = pos < tar;
         }
-            
+
         bot.stop();
             telemetry.addData("red", senR.red());
             telemetry.addData("blue", senL.red());
@@ -232,8 +232,8 @@ public class NonsenseTime extends LinearOpMode {
         if(!DRF){
             state = 3;
         }
-        
-        
+
+
         int Power = 1;
         switch(state){
             case 1:
@@ -255,7 +255,7 @@ public class NonsenseTime extends LinearOpMode {
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(.5);
                 break;
-            
+
             case 2:
                 bot.right(350, 0.3);
                 //bot.forward(300, 0.3);
@@ -268,37 +268,42 @@ public class NonsenseTime extends LinearOpMode {
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
                 break;
-                
+
             case 3:
-            bot.left(100, 0.3);
+            bot.right(100, 0.3);
             DropperR.setPosition(0.75);
             DropperL.setPosition(0.75);
             sleep(500);
-            bot.right(1500, 0.3);
+            bot.left(1500, 0.3);
+            bot.forward(1400, 0.3);
+            bot.right(4000,0.3);
             bot.leftTurn(1100, 0.3);
+            bot.left(300, 0.3);
             armMotor.setTargetPosition(-3000);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             armMotor.setPower(1.0);
             sleep(1500);
-            bot.right(300,0.2);
             bot.backwards(190, 0.15);
             DropperM.setPosition(1.0);
             sleep(700);
              armMotor.setTargetPosition(-100);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             armMotor.setPower(.5);
+            sleep(1500);
+            bot.right(300,0.2);
+            bot.backwards(500, 0.15);
             break;
-            
+
             default:
             bot.right(1000, 0.3);
         }
-        
+
         double mats = 2;
         double dis = 23.5 * mats;
         //encoderDrive(Power, dis, dis, 50000);
 
-        
-        
+
+
 
 
         // Step through each leg of the path,
@@ -314,7 +319,7 @@ public class NonsenseTime extends LinearOpMode {
         telemetry.addData("DRF",DRF);
         telemetry.addData("state", state);
         telemetry.addData("senR", Double.isNaN(senR.getDistance(DistanceUnit.CM)));
-        
+
         telemetry.update();
         sleep(30000);
 // pause to display final telemetry message.
@@ -407,9 +412,9 @@ public class NonsenseTime extends LinearOpMode {
         }else{
             return dist < thresh;
         }
-        
+
     }
-    
+
 
 
 
@@ -454,18 +459,18 @@ public class NonsenseTime extends LinearOpMode {
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
                     (LeftBackDrive.isBusy() && RightFrontDrive.isBusy())) {
-                        
+
                 if (LeftBackDrive.isBusy() && RightFrontDrive.isBusy()){
-            
+
             LeftFrontDrive.setPower(1.0);
             RightBackDrive.setPower(1.0);
-            
+
         }
         else {
             LeftFrontDrive.setPower(0);
             RightBackDrive.setPower(0);
         }
-        
+
 
                 // Display it for the driver.
                 telemetry.addData("Running to",  " %7d :%7d", newLeftTarget,  newRightTarget);
