@@ -66,10 +66,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Far Right Smart", group="Robot")
+@Autonomous(name="CloseLeft_smart", group="Robot")
 
 
-public class NonsenseTime extends LinearOpMode {
+public class CloseRight extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor         LeftFrontDrive   = null;
@@ -200,8 +200,8 @@ public class NonsenseTime extends LinearOpMode {
             telemetry.update();
             //CLF = !(senL.red() > senL.green() && senL.red() > 20);
             //CRF = !(senR.red() > senR.green() && senL.red() > 20);
-            DLF = isClose(senL.getDistance(DistanceUnit.CM), THRESH);
-            DRF = Double.isNaN(senR.getDistance(DistanceUnit.CM));
+            DLF = !isClose(senL.getDistance(DistanceUnit.CM), THRESH);
+            DRF = !isClose(senR.getDistance(DistanceUnit.CM), THRESH);
             DTF = pos < tar;
         }
 
@@ -217,98 +217,96 @@ public class NonsenseTime extends LinearOpMode {
         //DropperL.setPosition(0.75);
         sleep(1000);
         //bot.backwards(pos - star, 0.3);
-        if(!CLF){
+        if(!CRF){
             state = 1;
         }
         if(!DTF){
             state = 2;
         }
-        if(!CRF){
+        if(!CLF){
             state = 3;
         }
-        if(!DLF){
+        if(!DRF){
             state = 1;
         }
-        if(!DRF){
+        if(!DLF){
             state = 3;
         }
 
 
         int Power = 1;
-        switch(state){
-            case 1:
-                bot.left(100, 0.3);
-                DropperR.setPosition(0.75);
-                DropperL.setPosition(0.75);
-                sleep(500);
-                bot.left(1000, 0.3);
-                bot.forward(500, 0.3);
-                bot.right(3000, 0.3);
-                bot.leftTurn(1100, 0.3);
-                bot.left(700, 0.3);
-                armMotor.setTargetPosition(-3000);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(1.0);
-                sleep(1500);
-                //bot.right(300,0.2);
-                bot.backwards(190, 0.15);
-                DropperM.setPosition(1.0);
-                sleep(700);
-                 armMotor.setTargetPosition(-100);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(.5);
-                break;
-
-            case 2:
-                bot.left(350, 0.3);
-                //bot.forward(300, 0.3);
-                DropperR.setPosition(0.75);
-                DropperL.setPosition(0.75);
-                sleep(500);
-                bot.forward(500, 0.3);
-                bot.right(2000, 0.3);
-                bot.leftTurn(1100, 0.3);
-                bot.left(700, 0.3);
-                armMotor.setTargetPosition(-3000);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(1.0);
-                sleep(1500);
-                bot.baackwards(190, 0.15);
-                DropperM.setPosition(1.0);
-                sleep(700);
-                armMotor.setTargetPosition(-100);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(.5);
-                break;
-
-            case 3:
-            bot.right(100, 0.3);
-            DropperR.setPosition(0.75);
-            DropperL.setPosition(0.75);
-            sleep(500);
-            bot.left(1500, 0.3);
-            bot.forward(1400, 0.3);
-            bot.right(4000,0.3);
-            bot.leftTurn(1100, 0.3);
-            bot.left(300, 0.3);
-            armMotor.setTargetPosition(-3000);
-            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            armMotor.setPower(1.0);
-            sleep(1500);
-            bot.backwards(190, 0.15);
-            DropperM.setPosition(1.0);
-            sleep(700);
-             armMotor.setTargetPosition(-100);
-            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            armMotor.setPower(.5);
-            sleep(1500);
-            bot.right(300,0.2);
-            bot.backwards(500, 0.15);
-            break;
-
-            default:
-            bot.right(1000, 0.3);
-        }
+      switch(state){
+          case 1:
+              bot.right(100, 0.3);
+              DropperR.setPosition(0.75);
+              DropperL.setPosition(0.75);
+              sleep(500);
+              bot.left(1500, 0.3);
+              bot.rightTurn(1100, 0.3);
+              armMotor.setTargetPosition(-3000);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(1.0);
+              sleep(1500);
+              bot.right(300,0.2);
+              bot.backwards(190, 0.15);
+              DropperM.setPosition(1.0);
+              sleep(700);
+              armMotor.setTargetPosition(-100);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(.5);
+              sleep(700);
+              bot.right(600,0.2);
+              bot.backwards(300, 0.15);
+              break;
+          case 2:
+              bot.left(350, 0.3);
+              DropperR.setPosition(0.75);
+              DropperL.setPosition(0.75);
+              sleep(500);
+              bot.left(750, 0.3);
+              bot.rightTurn(1100, 0.3);
+              armMotor.setTargetPosition(-3000);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(1.0);
+              sleep(700);
+              bot.right(200,0.2);
+              bot.backwards(190, 0.15);
+              DropperM.setPosition(1.0);
+              sleep(700);
+              armMotor.setTargetPosition(-100);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(.5);
+              sleep(700);
+              bot.right(1000,0.2);
+              bot.backwards(300, 0.15);
+              break;
+          case 3:
+              bot.left(1000, 0.3);
+              DropperR.setPosition(0.75);
+              DropperL.setPosition(0.75);
+              sleep(500);
+              bot.left(500, 0.3);
+              bot.rightTurn(1100, 0.3);
+              armMotor.setTargetPosition(-3000);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(1.0);
+              bot.right(300, 0.3);
+              bot.backwards(190, 0.15);
+              DropperM.setPosition(1.0);
+              sleep(700);
+              armMotor.setTargetPosition(-100);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(.5);
+              sleep(700);
+              bot.right(300,0.2);
+              bot.backwards(300, 0.15);
+          break;
+          default:
+          bot.backwards(790, 0.3);
+          driveForward(100);
+          sleep (500);
+          driveLeft(2300);
+      }
 
         double mats = 2;
         double dis = 23.5 * mats;
