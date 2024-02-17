@@ -69,7 +69,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Autonomous(name="Far Right Smart", group="Robot")
 
 
-public class NonsenseTime extends LinearOpMode {
+public class RightFar extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor         LeftFrontDrive   = null;
@@ -273,7 +273,7 @@ public class NonsenseTime extends LinearOpMode {
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
                 sleep(1500);
-                bot.baackwards(190, 0.15);
+                bot.backwards(190, 0.15);
                 DropperM.setPosition(1.0);
                 sleep(700);
                 armMotor.setTargetPosition(-100);

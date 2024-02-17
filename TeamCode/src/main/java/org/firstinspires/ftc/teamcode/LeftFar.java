@@ -69,7 +69,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Autonomous(name="CloseLeft_smart", group="Robot")
 
 
-public class CloseRight extends LinearOpMode {
+public class LeftFar extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor         LeftFrontDrive   = null;
