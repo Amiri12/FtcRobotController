@@ -154,7 +154,7 @@ public class NonsenseTime extends LinearOpMode {
         DropperM.setPosition(0.5);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        //bot.forward(800, 0.2);
+        bot.forward(800, 0.2);
         int sqr = 1000;
         sleep(500);
         boolean CRF = true;
@@ -188,8 +188,8 @@ public class NonsenseTime extends LinearOpMode {
         
         telemetry.update();
         sleep(1000);
-        while(((CLF || DLF) && (CRF || DRF) )|| DTF){
-            //bot.forward(0.3);
+        while(DLF && DTF && CRF && DRF && CLF){
+            bot.forward(0.3);
             pos = LeftFrontDrive.getCurrentPosition();
             telemetry.addData("redR", senR.red());
             telemetry.addData("redL", senL.red());
