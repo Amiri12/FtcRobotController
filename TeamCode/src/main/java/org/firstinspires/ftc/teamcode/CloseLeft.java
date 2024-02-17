@@ -255,11 +255,11 @@ public class CloseLeft extends LinearOpMode {
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(.5);
               sleep(700);
-              bot.right(600,0.2);
-              bot.backwards(300, 0.15);
+              bot.right(900,0.2);
+              bot.backwards(500, 0.15);
               break;
           case 2:
-              bot.left(350, 0.3);
+              bot.right(350, 0.3);
               DropperR.setPosition(0.75);
               DropperL.setPosition(0.75);
               sleep(500);
@@ -277,19 +277,20 @@ public class CloseLeft extends LinearOpMode {
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(.5);
               sleep(700);
-              bot.right(1000,0.2);
-              bot.backwards(300, 0.15);
+              bot.right(1500,0.2);
+              bot.backwards(600, 0.15);
               break;
           case 3:
-              bot.left(1000, 0.3);
+              bot.left(1100, 0.3);
               DropperR.setPosition(0.75);
               DropperL.setPosition(0.75);
               sleep(500);
-              bot.left(500, 0.3);
+              bot.left(300, 0.3);
               bot.rightTurn(1100, 0.3);
               armMotor.setTargetPosition(-3000);
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(1.0);
+              sleep(700);
               bot.right(300, 0.3);
               bot.backwards(190, 0.15);
               DropperM.setPosition(1.0);

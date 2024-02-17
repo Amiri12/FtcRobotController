@@ -247,7 +247,7 @@ public class CloseRight extends LinearOpMode {
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
                 sleep(1500);
-                bot.right(300,0.2);
+                bot.right(200,0.2);
                 bot.backwards(190, 0.15);
                 DropperM.setPosition(1.0);
                 sleep(700);
@@ -255,7 +255,7 @@ public class CloseRight extends LinearOpMode {
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(.5);
                 sleep(700);
-                bot.left(600,0.2);
+                bot.left(1200,0.2);
                 bot.backwards(300, 0.15);
                 break;
 

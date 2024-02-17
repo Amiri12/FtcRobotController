@@ -203,7 +203,7 @@ public class person2 extends LinearOpMode {
             double Ltrig = gamepad2.left_trigger;
             boolean modF = gamepad1.left_bumper;
             double mod = 1.0;
-            double mod2 = 1.0;double mod2 = 1.0;
+            double mod2 = 1.0;
 
             // Decrease mod2 in proportion to gamepad1.right_trigger
             mod2 -= gamepad1.right_trigger * 0.4; // You can adjust the multiplier as needed
