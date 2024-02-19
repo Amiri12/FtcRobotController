@@ -394,7 +394,7 @@ public class person2 extends LinearOpMode {
             }
             
             
-            if(dist.getDistance(DistanceUnit.CM) < 22){
+            if(dist.getDistance(DistanceUnit.CM) < 40){
                 // Decrease mod in proportion to dist
                 mod = dist.getDistance(DistanceUnit.CM) * 0.01; // You can adjust the multiplier as needed
 

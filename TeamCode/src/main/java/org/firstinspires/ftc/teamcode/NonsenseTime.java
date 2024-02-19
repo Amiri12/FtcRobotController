@@ -154,7 +154,7 @@ public class NonsenseTime extends LinearOpMode {
         DropperM.setPosition(0.5);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-         bot.forward(1000, 0.3);
+         bot.left(1000, 0.5);
         
         double mats = 2;
         double dis = 23.5 * mats;
