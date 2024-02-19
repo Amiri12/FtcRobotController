@@ -154,144 +154,7 @@ public class NonsenseTime extends LinearOpMode {
         DropperM.setPosition(0.5);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        bot.forward(800, 0.2);
-        int sqr = 1000;
-        sleep(500);
-        boolean CRF = true;
-        boolean CLF = true;
-        boolean DTF = true;
-        boolean DRF = true;
-        boolean DLF = true;
-        /*
-        driveForward(750);
-        sleep (500);
-        driveRight(sqr);
-        sleep (500);
-        driveBack(750);
-        sleep (500);
-        driveLeft(sqr);
-        */
-        
-        int tar = LeftFrontDrive.getCurrentPosition() + 1500;
-        int pos = LeftFrontDrive.getCurrentPosition();
-        int star = LeftFrontDrive.getCurrentPosition();
-        int state = 0;
-        telemetry.addData("Path", "Complete");
-        telemetry.addData("pos", LeftFrontDrive.getCurrentPosition());
-        telemetry.addData("CLF",CLF);
-        telemetry.addData("DTF",DTF);
-        telemetry.addData("CRF",CRF);
-        telemetry.addData("DLF",DLF);
-        telemetry.addData("DRF",DRF);
-        telemetry.addData("state", state);
-        telemetry.addData("senR", Double.isNaN(senR.getDistance(DistanceUnit.CM)));
-        
-        telemetry.update();
-        sleep(1000);
-        while(DLF && DTF && CRF && DRF && CLF){
-            bot.forward(0.3);
-            pos = LeftFrontDrive.getCurrentPosition();
-            telemetry.addData("redR", senR.red());
-            telemetry.addData("redL", senL.red());
-            telemetry.addData("green", senL.green());
-            telemetry.addData("pos", pos);
-            telemetry.addData("distR",senR.getDistance(DistanceUnit.CM));
-            telemetry.addData("distL",senL.getDistance(DistanceUnit.CM));
-            telemetry.update();
-            //CLF = !(senL.red() > senL.green() && senL.red() > 20);
-            //CRF = !(senR.red() > senR.green() && senL.red() > 20);
-            DLF = isClose(senL.getDistance(DistanceUnit.CM), THRESH);
-            DRF = Double.isNaN(senR.getDistance(DistanceUnit.CM));
-            DTF = pos < tar;
-        }
-            
-        bot.stop();
-            telemetry.addData("red", senR.red());
-            telemetry.addData("blue", senL.red());
-            telemetry.addData("green", senL.green());
-            telemetry.addData("pos", pos);
-            telemetry.addData("distR",senR.getDistance(DistanceUnit.CM));
-            telemetry.addData("distL",senL.getDistance(DistanceUnit.CM));
-            telemetry.update();
-        //DropperR.setPosition(0.75);
-        //DropperL.setPosition(0.75);
-        sleep(1000);
-        //bot.backwards(pos - star, 0.3);
-        if(!CLF){
-            state = 1;
-        }
-        if(!DTF){
-            state = 2;
-        }
-        if(!CRF){
-            state = 3;
-        }
-        if(!DLF){
-            state = 1;
-        }
-        if(!DRF){
-            state = 3;
-        }
-        
-        
-        int Power = 1;
-        switch(state){
-            case 1:
-                bot.left(100, 0.3);
-                DropperR.setPosition(0.75);
-                DropperL.setPosition(0.75);
-                sleep(500);
-                bot.right(1500, 0.3);
-                bot.leftTurn(1100, 0.3);
-                armMotor.setTargetPosition(-3000);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(1.0);
-                sleep(1500);
-                bot.right(300,0.2);
-                bot.backwards(190, 0.15);
-                DropperM.setPosition(1.0);
-                sleep(700);
-                 armMotor.setTargetPosition(-100);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(.5);
-                break;
-            
-            case 2:
-                bot.right(350, 0.3);
-                //bot.forward(300, 0.3);
-                DropperR.setPosition(0.75);
-                DropperL.setPosition(0.75);
-                sleep(500);
-                bot.right(750, 0.3);
-                bot.leftTurn(1100, 0.3);
-                armMotor.setTargetPosition(-3000);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(1.0);
-                break;
-                
-            case 3:
-            bot.left(100, 0.3);
-            DropperR.setPosition(0.75);
-            DropperL.setPosition(0.75);
-            sleep(500);
-            bot.right(1500, 0.3);
-            bot.leftTurn(1100, 0.3);
-            armMotor.setTargetPosition(-3000);
-            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            armMotor.setPower(1.0);
-            sleep(1500);
-            bot.right(300,0.2);
-            bot.backwards(190, 0.15);
-            DropperM.setPosition(1.0);
-            sleep(700);
-             armMotor.setTargetPosition(-100);
-            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            armMotor.setPower(.5);
-            break;
-            
-            default:
-            bot.right(1000, 0.3);
-        }
+         bot.forward(1000, 0.3);
         
         double mats = 2;
         double dis = 23.5 * mats;
@@ -307,12 +170,7 @@ public class NonsenseTime extends LinearOpMode {
 
         telemetry.addData("Path", "Complete");
         telemetry.addData("pos", LeftFrontDrive.getCurrentPosition());
-        telemetry.addData("CLF",CLF);
-        telemetry.addData("DTF",DTF);
-        telemetry.addData("CRF",CRF);
-        telemetry.addData("DLF",DLF);
-        telemetry.addData("DRF",DRF);
-        telemetry.addData("state", state);
+        telemetry.addData("runs", bot.GetRuns());
         telemetry.addData("senR", Double.isNaN(senR.getDistance(DistanceUnit.CM)));
         
         telemetry.update();

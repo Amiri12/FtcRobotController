@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 //import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import static java.lang.Math.abs;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -18,6 +20,8 @@ public class Bobot {
     private int posLB;
     private int posRB;
     private int pos;
+
+    private int runs;
     
     public Bobot(DcMotor lfd, DcMotor rfd, DcMotor lbd, DcMotor rbd){
         LFD = lfd;
@@ -29,6 +33,7 @@ public class Bobot {
         posLB = 0;
         posRB = 0;
         pos = 0;
+        runs = 0;
         LFD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RFD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LBD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -64,11 +69,13 @@ public class Bobot {
         RFD.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         LBD.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         RBD.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        runs = 0;
         while(posLF<LFD.getTargetPosition()&&posRF<RFD.getTargetPosition()&&posLB<LBD.getTargetPosition()&&posRB<RBD.getTargetPosition()){
             posLF = LFD.getCurrentPosition();
             posRF = RFD.getCurrentPosition();
             posLB = LBD.getCurrentPosition();
             posRB = RBD.getCurrentPosition();
+            runs++;
             
         }
     }
@@ -105,13 +112,13 @@ public class Bobot {
         posRF = RFD.getCurrentPosition();
         posLB = LBD.getCurrentPosition();
         posRB = RBD.getCurrentPosition();
+        int oldAv; // old average change
+        double mod = 0.1;
         
-        
-        
-        LFD.setPower(pow);
-        RFD.setPower(pow);
-        LBD.setPower(pow);
-        RBD.setPower(pow);
+        LFD.setPower(pow*mod);
+        RFD.setPower(pow*mod);
+        LBD.setPower(pow*mod);
+        RBD.setPower(pow*mod);
         
         LFD.setTargetPosition(posLF - dist);
         
@@ -126,11 +133,37 @@ public class Bobot {
         LBD.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         RBD.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         while(posLF>LFD.getTargetPosition()&&posRF<RFD.getTargetPosition()&&posLB<LBD.getTargetPosition()&&posRB>RBD.getTargetPosition()){
+            oldAv = (Math.abs(LFD.getCurrentPosition()-posLF ) + Math.abs(LBD.getCurrentPosition() - posLB) + Math.abs(RBD.getCurrentPosition() - posRB) + Math.abs(RFD.getCurrentPosition() - posRF))/4;
             posLF = LFD.getCurrentPosition();
             posRF = RFD.getCurrentPosition();
             posLB = LBD.getCurrentPosition();
             posRB = RBD.getCurrentPosition();
-            
+            if(oldAv < dist/4){
+                pow *= mod;
+                mod += 0.01;
+                mod = Math.min(mod, 1.0);
+                LFD.setPower(pow*mod);
+                RFD.setPower(pow*mod);
+                LBD.setPower(pow*mod);
+                RBD.setPower(pow*mod);
+            }else if(oldAv > dist * 0.75){
+                pow *= mod;
+                mod -= 0.01;
+                mod = Math.max(mod,0.02);
+                LFD.setPower(pow*mod);
+                RFD.setPower(pow*mod);
+                LBD.setPower(pow*mod);
+                RBD.setPower(pow*mod);
+            }else{
+                LFD.setPower(pow);
+                RFD.setPower(pow);
+                LBD.setPower(pow);
+                RBD.setPower(pow);
+            }
+
+
+
+
         }
     }
     public void right(double pow){
@@ -284,6 +317,11 @@ public class Bobot {
             posRB = RBD.getCurrentPosition();
             
         }
+    }
+
+    public int GetRuns(){
+        int runs1 = runs;
+        return runs1;
     }
     
     

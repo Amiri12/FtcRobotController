@@ -395,7 +395,10 @@ public class person2 extends LinearOpMode {
             
             
             if(dist.getDistance(DistanceUnit.CM) < 22){
-                mod = 0.30;
+                // Decrease mod in proportion to dist
+                mod = dist.getDistance(DistanceUnit.CM) * 0.01; // You can adjust the multiplier as needed
+
+
             }
             
             
@@ -424,14 +427,11 @@ public class person2 extends LinearOpMode {
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             //telemetry.addData("motor pos", pos);
-            telemetry.addData("motor pos", wristMotor.getCurrentPosition());
-            telemetry.addData("motor target", armMotor.getTargetPosition());
-            telemetry.addData("lock",lock);
-            telemetry.addData("flag",flag);
-            telemetry.addData("dist", dist.getDistance(DistanceUnit.CM));
-            telemetry.addData("red", sen.red());
-            telemetry.addData("blue", sen.blue());
-            telemetry.addData("green", sen.green());
+            telemetry.addData("wristMotor pos", wristMotor.getCurrentPosition());
+            telemetry.addData("armMotor tar", armMotor.getTargetPosition());
+            telemetry.addData("mod",mod);
+            telemetry.addData("mod2",mod2);
+            telemetry.addData("armDist", dist.getDistance(DistanceUnit.CM));
             telemetry.addData("dist2", sen.getDistance(DistanceUnit.CM));
             
             telemetry.update();
