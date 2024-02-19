@@ -357,7 +357,7 @@ public class person2 extends LinearOpMode {
                 armMotor.setTargetPosition(-400);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
-                 wristMotor.setTargetPosition(200);
+                wristMotor.setTargetPosition(200);
                 wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 wristMotor.setPower(0.5);
                 pos = armMotor.getCurrentPosition();

@@ -172,7 +172,7 @@ public class CloseRight extends LinearOpMode {
         driveLeft(sqr);
         */
 
-        int tar = LeftFrontDrive.getCurrentPosition() + 1500;
+        int tar = LeftFrontDrive.getCurrentPosition() + 700;
         int pos = LeftFrontDrive.getCurrentPosition();
         int star = LeftFrontDrive.getCurrentPosition();
         int state = 0;
@@ -248,7 +248,7 @@ public class CloseRight extends LinearOpMode {
                 armMotor.setPower(1.0);
                 sleep(1500);
                 bot.right(200,0.2);
-                bot.backwards(190, 0.15);
+                bot.backwards(220, 0.15);
                 DropperM.setPosition(1.0);
                 sleep(700);
                  armMotor.setTargetPosition(-100);
@@ -271,8 +271,8 @@ public class CloseRight extends LinearOpMode {
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
                 sleep(700);
-                bot.right(200,0.2);
-                bot.backwards(190, 0.15);
+                bot.left(430,0.2);
+                bot.backwards(350, 0.15);
                 DropperM.setPosition(1.0);
                 sleep(700);
                 armMotor.setTargetPosition(-100);
@@ -293,15 +293,16 @@ public class CloseRight extends LinearOpMode {
                 armMotor.setTargetPosition(-3000);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
-                bot.left(300, 0.3);
+                sleep(700);
+                bot.left(400, 0.3);
                 bot.backwards(190, 0.15);
                 DropperM.setPosition(1.0);
-                sleep(700);
+                sleep(800);
                 armMotor.setTargetPosition(-100);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(.5);
                 sleep(700);
-                bot.left(300,0.2);
+                bot.left(900,0.2);
                 bot.backwards(300, 0.15);
             break;
 

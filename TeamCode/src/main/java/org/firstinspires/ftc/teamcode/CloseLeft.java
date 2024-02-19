@@ -98,7 +98,7 @@ public class CloseLeft extends LinearOpMode {
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.5;
+    static final double     TURN_SPEED              = 0.3;
     static final double     THRESH = 20;
 
     @Override
@@ -149,12 +149,12 @@ public class CloseLeft extends LinearOpMode {
                 RightBackDrive.getCurrentPosition());
                 telemetry.addData("dist", senL.getDistance(DistanceUnit.CM));
         telemetry.update();
-        DropperR.setPosition(0.5);
-        DropperL.setPosition(0.5);
-        DropperM.setPosition(0.5);
+        DropperR.setPosition(0.3);
+        DropperL.setPosition(0.3);
+        DropperM.setPosition(0.3);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        bot.forward(800, 0.2);
+        bot.forward(800, 0.4);
         int sqr = 1000;
         sleep(500);
         boolean CRF = true;
@@ -172,7 +172,7 @@ public class CloseLeft extends LinearOpMode {
         driveLeft(sqr);
         */
 
-        int tar = LeftFrontDrive.getCurrentPosition() + 1500;
+        int tar = LeftFrontDrive.getCurrentPosition() + 680;
         int pos = LeftFrontDrive.getCurrentPosition();
         int star = LeftFrontDrive.getCurrentPosition();
         int state = 0;
@@ -259,7 +259,7 @@ public class CloseLeft extends LinearOpMode {
               bot.backwards(500, 0.15);
               break;
           case 2:
-              bot.right(350, 0.3);
+              bot.left(350, 0.3);
               DropperR.setPosition(0.75);
               DropperL.setPosition(0.75);
               sleep(500);
@@ -269,16 +269,16 @@ public class CloseLeft extends LinearOpMode {
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(1.0);
               sleep(700);
-              bot.right(200,0.2);
-              bot.backwards(190, 0.15);
+              bot.right(400,0.3);
+              bot.backwards(300, 0.15);
               DropperM.setPosition(1.0);
               sleep(700);
               armMotor.setTargetPosition(-100);
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(.5);
               sleep(700);
-              bot.right(1500,0.2);
-              bot.backwards(600, 0.15);
+              bot.right(1200,0.2);
+              bot.backwards(900, 0.15);
               break;
           case 3:
               bot.left(1100, 0.3);
@@ -338,10 +338,10 @@ public class CloseLeft extends LinearOpMode {
     public void driveForward(int driveTime) {
 
 
-        LeftFrontDrive.setPower(0.5);
-        LeftBackDrive.setPower(0.5);
-        RightFrontDrive.setPower(0.5);
-        RightBackDrive.setPower(0.5);
+        LeftFrontDrive.setPower(0.3);
+        LeftBackDrive.setPower(0.3);
+        RightFrontDrive.setPower(0.3);
+        RightBackDrive.setPower(0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);
@@ -352,10 +352,10 @@ public class CloseLeft extends LinearOpMode {
 
     public void driveBack(int driveTime) {
 
-        LeftFrontDrive.setPower(-0.5);
-        LeftBackDrive.setPower(-0.5);
-        RightFrontDrive.setPower(-0.5);
-        RightBackDrive.setPower(-0.5);
+        LeftFrontDrive.setPower(-0.3);
+        LeftBackDrive.setPower(-0.3);
+        RightFrontDrive.setPower(-0.3);
+        RightBackDrive.setPower(-0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);
@@ -366,10 +366,10 @@ public class CloseLeft extends LinearOpMode {
 
     public void driveRight(int driveTime) {
 
-        LeftFrontDrive.setPower(0.5);
-        LeftBackDrive.setPower(-0.5);
-        RightFrontDrive.setPower(-0.5);
-        RightBackDrive.setPower(0.5);
+        LeftFrontDrive.setPower(0.3);
+        LeftBackDrive.setPower(-0.3);
+        RightFrontDrive.setPower(-0.3);
+        RightBackDrive.setPower(0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);
@@ -380,10 +380,10 @@ public class CloseLeft extends LinearOpMode {
 
     public void driveLeft(int driveTime) {
 
-        LeftFrontDrive.setPower(-0.5);
-        LeftBackDrive.setPower(0.5);
-        RightFrontDrive.setPower(0.5);
-        RightBackDrive.setPower(-0.5);
+        LeftFrontDrive.setPower(-0.3);
+        LeftBackDrive.setPower(0.3);
+        RightFrontDrive.setPower(0.3);
+        RightBackDrive.setPower(-0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);
@@ -393,10 +393,10 @@ public class CloseLeft extends LinearOpMode {
     }
     public void turnRight(int driveTime) {
 
-        LeftFrontDrive.setPower(0.5);
-        LeftBackDrive.setPower(0.5);
-        RightFrontDrive.setPower(-0.5);
-        RightBackDrive.setPower(-0.5);
+        LeftFrontDrive.setPower(0.3);
+        LeftBackDrive.setPower(0.3);
+        RightFrontDrive.setPower(-0.3);
+        RightBackDrive.setPower(-0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);
@@ -406,10 +406,10 @@ public class CloseLeft extends LinearOpMode {
     }
     public void turnLeft(int driveTime) {
 
-        LeftFrontDrive.setPower(-0.5);
-        LeftBackDrive.setPower(-0.5);
-        RightFrontDrive.setPower(0.5);
-        RightBackDrive.setPower(0.5);
+        LeftFrontDrive.setPower(-0.3);
+        LeftBackDrive.setPower(-0.3);
+        RightFrontDrive.setPower(0.3);
+        RightBackDrive.setPower(0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);

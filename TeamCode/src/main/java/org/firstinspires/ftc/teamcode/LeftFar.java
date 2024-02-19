@@ -172,7 +172,7 @@ public class LeftFar extends LinearOpMode {
         driveLeft(sqr);
         */
 
-        int tar = LeftFrontDrive.getCurrentPosition() + 1500;
+        int tar = LeftFrontDrive.getCurrentPosition() + 1100;
         int pos = LeftFrontDrive.getCurrentPosition();
         int star = LeftFrontDrive.getCurrentPosition();
         int state = 0;
