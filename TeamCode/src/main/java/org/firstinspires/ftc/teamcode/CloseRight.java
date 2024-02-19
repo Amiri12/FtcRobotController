@@ -66,7 +66,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="CloseRight_smart", group="Robot")
+@Autonomous(name="CloseRed_smart", group="Robot")
 
 
 public class CloseRight extends LinearOpMode {
@@ -99,7 +99,7 @@ public class CloseRight extends LinearOpMode {
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
-    static final double     THRESH = 20;
+    static final double     THRESH = 25;
 
     @Override
     public void runOpMode() {
@@ -189,7 +189,7 @@ public class CloseRight extends LinearOpMode {
         telemetry.update();
         sleep(1000);
         while(DLF && DTF && CRF && DRF && CLF){
-            bot.forward(0.3);
+            bot.forward(0.2);
             pos = LeftFrontDrive.getCurrentPosition();
             telemetry.addData("redR", senR.red());
             telemetry.addData("redL", senL.red());
@@ -247,15 +247,15 @@ public class CloseRight extends LinearOpMode {
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
                 sleep(1500);
-                bot.right(200,0.2);
-                bot.backwards(220, 0.15);
+                bot.right(300,0.2);
+                bot.backwards(230, 0.15);
                 DropperM.setPosition(1.0);
                 sleep(700);
                  armMotor.setTargetPosition(-100);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(.5);
                 sleep(700);
-                bot.left(1200,0.2);
+                bot.left(1300,0.2);
                 bot.backwards(300, 0.15);
                 break;
 
@@ -267,19 +267,19 @@ public class CloseRight extends LinearOpMode {
                 sleep(500);
                 bot.right(750, 0.3);
                 bot.leftTurn(1100, 0.3);
-                armMotor.setTargetPosition(-3000);
+                armMotor.setTargetPosition(-3600);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
                 sleep(700);
                 bot.left(430,0.2);
-                bot.backwards(350, 0.15);
+                bot.backwards(240, 0.15);
                 DropperM.setPosition(1.0);
                 sleep(700);
                 armMotor.setTargetPosition(-100);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(.5);
                 sleep(700);
-                bot.left(1000,0.2);
+                bot.left(1500,0.2);
                 bot.backwards(300, 0.15);
                 break;
 

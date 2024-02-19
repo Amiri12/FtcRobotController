@@ -319,13 +319,13 @@ public class person2 extends LinearOpMode {
             if(lock){
                 lock = true;
                 flag = false;
-                armMotor.setTargetPosition(-3300);
+                armMotor.setTargetPosition(-3700);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
                 wristMotor.setTargetPosition(150);
                 wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 wristMotor.setPower(0.5);
-                if(armMotor.getCurrentPosition() < -3200){
+                if(armMotor.getCurrentPosition() < -3600){
                     wristMotor.setTargetPosition(94);
                     wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     wristMotor.setPower(0.6);

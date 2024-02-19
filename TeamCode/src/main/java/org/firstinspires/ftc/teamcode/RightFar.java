@@ -66,7 +66,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Far Right Smart", group="Robot")
+@Autonomous(name="FarRed_Smart", group="Robot")
 
 
 public class RightFar extends LinearOpMode {

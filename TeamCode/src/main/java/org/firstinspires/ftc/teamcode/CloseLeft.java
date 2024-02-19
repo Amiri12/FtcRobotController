@@ -66,7 +66,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="CloseLeft_smart", group="Robot")
+@Autonomous(name="CloseBlue_smart", group="Robot")
 
 
 public class CloseLeft extends LinearOpMode {
