@@ -243,19 +243,19 @@ public class CloseRight extends LinearOpMode {
                 sleep(500);
                 bot.right(1500, 0.3);
                 bot.leftTurn(1100, 0.3);
-                armMotor.setTargetPosition(-3000);
+                armMotor.setTargetPosition(-3600);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
                 sleep(1500);
                 bot.right(300,0.2);
-                bot.backwards(230, 0.15);
+                bot.backwards(200, 0.15);
                 DropperM.setPosition(1.0);
                 sleep(700);
                  armMotor.setTargetPosition(-100);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(.5);
                 sleep(700);
-                bot.left(1300,0.2);
+                bot.left(1600,0.2);
                 bot.backwards(300, 0.15);
                 break;
 
@@ -272,14 +272,14 @@ public class CloseRight extends LinearOpMode {
                 armMotor.setPower(1.0);
                 sleep(700);
                 bot.left(430,0.2);
-                bot.backwards(240, 0.15);
+                bot.backwards(220, 0.15);
                 DropperM.setPosition(1.0);
                 sleep(700);
                 armMotor.setTargetPosition(-100);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(.5);
                 sleep(700);
-                bot.left(1500,0.2);
+                bot.left(1700,0.2);
                 bot.backwards(300, 0.15);
                 break;
 
@@ -290,19 +290,19 @@ public class CloseRight extends LinearOpMode {
                 sleep(500);
                 bot.right(500, 0.3);
                 bot.leftTurn(1100, 0.3);
-                armMotor.setTargetPosition(-3000);
+                armMotor.setTargetPosition(-3600);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
                 sleep(700);
                 bot.left(400, 0.3);
-                bot.backwards(190, 0.15);
+                bot.backwards(120, 0.15);
                 DropperM.setPosition(1.0);
                 sleep(800);
                 armMotor.setTargetPosition(-100);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(.5);
                 sleep(700);
-                bot.left(900,0.2);
+                bot.left(1100,0.2);
                 bot.backwards(300, 0.15);
             break;
 

@@ -117,8 +117,8 @@ public class person2 extends LinearOpMode {
 
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
-        leftFrontDrive  = hardwareMap.get(DcMotor.class, "LFD");
-        leftBackDrive  = hardwareMap.get(DcMotor.class, "LBD");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "LFD");
+        leftBackDrive = hardwareMap.get(DcMotor.class, "LBD");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "RFD");
         rightBackDrive = hardwareMap.get(DcMotor.class, "RBD");
         armMotor = hardwareMap.get(DcMotor.class, "AM");
@@ -126,7 +126,7 @@ public class person2 extends LinearOpMode {
         SUCC = hardwareMap.get(DcMotor.class, "SU");
         sen = hardwareMap.get(ColorRangeSensor.class, "sen1");
         lift = hardwareMap.get(DcMotor.class, "lift");
-        
+
         temp = hardwareMap.get(AnalogInput.class, "Temp");
         claw = hardwareMap.get(CRServo.class, "ser1");
         claw1 = hardwareMap.get(CRServo.class, "ser2");
@@ -134,8 +134,7 @@ public class person2 extends LinearOpMode {
         claw3 = hardwareMap.get(CRServo.class, "ser4");
         claw4 = hardwareMap.get(Servo.class, "ser5");
         dist = hardwareMap.get(DistanceSensor.class, "dist");
-        
-        
+
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -151,9 +150,8 @@ public class person2 extends LinearOpMode {
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        
-        
-        
+
+
         wristMotor.setDirection(DcMotor.Direction.FORWARD);
         leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -165,14 +163,7 @@ public class person2 extends LinearOpMode {
         claw.setDirection(CRServo.Direction.REVERSE);
         //armMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
         //wristMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        
-       
-        
-        
 
-        
-        
-        
 
         // Wait for the game to start (driver presses PLAY)
         telemetry.addData("Status", "Initialized");
@@ -180,8 +171,10 @@ public class person2 extends LinearOpMode {
         int pos = -400;
         boolean flag = true;
         boolean lock = false;
+        boolean scoreNeg = true;
         double Lval = 0;
         double Cval = 0;
+        int tick = 1;
         waitForStart();
         runtime.reset();
 
@@ -190,9 +183,9 @@ public class person2 extends LinearOpMode {
             double max;
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-            double axial   = gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-            double lateral =   -gamepad1.right_stick_x;
-            double yaw     = gamepad1.left_stick_x;
+            double axial = gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+            double lateral = -gamepad1.right_stick_x;
+            double yaw = gamepad1.left_stick_x;
             boolean Abut = gamepad2.a;
             boolean Bbut = gamepad1.right_bumper;
             boolean Sbut = gamepad2.square;
@@ -202,9 +195,15 @@ public class person2 extends LinearOpMode {
             double Rtrig = gamepad2.right_trigger;
             double Ltrig = gamepad2.left_trigger;
             boolean modF = gamepad1.left_bumper;
+            boolean scorePos = gamepad1.dpad_left;
             double mod = 1.0;
             double mod2 = 1.0;
 
+            if (scorePos && scoreNeg) {
+                tick = -tick;
+            }
+
+            scoreNeg = !scorePos;
             // Decrease mod2 in proportion to gamepad1.right_trigger
             mod2 -= gamepad1.right_trigger * 0.4; // You can adjust the multiplier as needed
 
@@ -214,41 +213,41 @@ public class person2 extends LinearOpMode {
             //gamepad2.left_bumper;
             boolean pick = gamepad2.right_bumper;
             double gate = gamepad2.right_trigger + 0.5;
-            
-            
-            if(flag){
-              lock = gamepad2.left_bumper; 
+
+
+            if (flag) {
+                lock = gamepad2.left_bumper;
             }
-            if(modF){
+            if (modF) {
                 mod = 0.25;
-                
-            }else{
+
+            } else {
                 mod = 1.0;
             }
-            
-            if(Lbut){
-               Lval = 1.0; 
+
+            if (Lbut) {
+                Lval = 1.0;
             }
-            if(!Lbut){
+            if (!Lbut) {
                 Lval = 0.0;
             }
-            if(Rbut){
-               Cval = -1.0; 
+            if (Rbut) {
+                Cval = -1.0;
             }
-            if(!Rbut){
+            if (!Rbut) {
                 Cval = 0.0;
             }
-            
+
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
-            double leftFrontPower  = -axial + lateral + yaw;
+            double leftFrontPower = -axial + lateral + yaw;
             double rightFrontPower = -axial - lateral - yaw;
-            double leftBackPower   = axial - lateral + yaw;
-            double rightBackPower  = axial + lateral - yaw;
+            double leftBackPower = axial - lateral + yaw;
+            double rightBackPower = axial + lateral - yaw;
             double armPower = gamepad2.left_stick_y * 0.5;
             double wristPower = gamepad2.right_stick_y * 0.4;
-            double liftPower = Cval+Lval;
+            double liftPower = Cval + Lval;
             //double pos = 0.0;
             double Apos = 0.0;
             boolean home = false;
@@ -259,13 +258,13 @@ public class person2 extends LinearOpMode {
             max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
             max = Math.max(max, Math.abs(leftBackPower));
             max = Math.max(max, Math.abs(rightBackPower));
-            
+
 
             if (max > 1.0) {
-                leftFrontPower  /= max;
+                leftFrontPower /= max;
                 rightFrontPower /= max;
-                leftBackPower   /= max;
-                rightBackPower  /= max;
+                leftBackPower /= max;
+                rightBackPower /= max;
             }
 
             // This is test code:
@@ -286,58 +285,74 @@ public class person2 extends LinearOpMode {
             */
 
             // Send calculated power to wheels
-            
-            if(Abut){
+
+            if (Abut) {
                 //claw1.setPosition(0.5);
                 //claw2.setPosition(0.5);
-              }else{
-                  //claw1.setPosition(0.0);
-                  //claw2.setPosition(0.0);
-              }
-            if(Bbut){
+            } else {
+                //claw1.setPosition(0.0);
+                //claw2.setPosition(0.0);
+            }
+            if (Bbut) {
                 claw.setPower(1.0);
                 claw1.setPower(1.0);
                 claw3.setPower(1.0);
                 //claw4.setPower(1.0);
                 SUCC.setPower(1.0);
-                
-            }else{
-                if(gamepad1.b && !Bbut){
-                SUCC.setPower(-1.0);
-                claw.setPower(0.0);
-                claw1.setPower(0.0);
-                claw3.setPower(0.0);
-                //claw4.setPower(0.0);
-            }else{
-                claw.setPower(0.0);
-                claw1.setPower(0.0);
-                claw3.setPower(0.0);
-                //claw4.setPower(0.0);
-                SUCC.setPower(0.0);
+
+            } else {
+                if (gamepad1.b && !Bbut) {
+                    SUCC.setPower(-1.0);
+                    claw.setPower(0.0);
+                    claw1.setPower(0.0);
+                    claw3.setPower(0.0);
+                    //claw4.setPower(0.0);
+                } else {
+                    claw.setPower(0.0);
+                    claw1.setPower(0.0);
+                    claw3.setPower(0.0);
+                    //claw4.setPower(0.0);
+                    SUCC.setPower(0.0);
+                }
             }
-            }
-            if(lock){
+            if (lock) {
                 lock = true;
                 flag = false;
-                armMotor.setTargetPosition(-3700);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(1.0);
-                wristMotor.setTargetPosition(150);
-                wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                wristMotor.setPower(0.5);
-                if(armMotor.getCurrentPosition() < -3600){
-                    wristMotor.setTargetPosition(94);
+                if (tick > 0) {
+                    armMotor.setTargetPosition(-3700);
+                    armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    armMotor.setPower(1.0);
+                    wristMotor.setTargetPosition(150);
                     wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    wristMotor.setPower(0.6);
-                    lock = false;
-                    flag = true;
-                    pos = armMotor.getCurrentPosition();
+                    wristMotor.setPower(0.5);
+                    if (armMotor.getCurrentPosition() < -3600) {
+                        wristMotor.setTargetPosition(94);
+                        wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        wristMotor.setPower(0.6);
+                        lock = false;
+                        flag = true;
+                        pos = armMotor.getCurrentPosition();
+                    } else {
+                        armMotor.setTargetPosition(-3200);
+                        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        armMotor.setPower(1.0);
+                        wristMotor.setTargetPosition(150);
+                        wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        wristMotor.setPower(0.5);
+                        if (armMotor.getCurrentPosition() < -3000) {
+                            wristMotor.setTargetPosition(94);
+                            wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                            wristMotor.setPower(0.6);
+                            lock = false;
+                            flag = true;
+                            pos = armMotor.getCurrentPosition();
+                        }
+                    }
                 }
-                
-                
-                
+
+
             }
-            if(Sbut){
+            if (Sbut) {
                 armMotor.setTargetPosition(50);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
@@ -345,15 +360,15 @@ public class person2 extends LinearOpMode {
                 wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 wristMotor.setPower(0.3);
                 pos = armMotor.getCurrentPosition();
-                 if(armMotor.getCurrentPosition() < 100){
+                if (armMotor.getCurrentPosition() < 100) {
                     wristMotor.setTargetPosition(300);
                     wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     wristMotor.setPower(0.4);
                 }
             }
-            
-            
-            if(Abut){
+
+
+            if (Abut) {
                 armMotor.setTargetPosition(-400);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
@@ -361,79 +376,78 @@ public class person2 extends LinearOpMode {
                 wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 wristMotor.setPower(0.5);
                 pos = armMotor.getCurrentPosition();
-                 
+
             }
-            
-            if(gamepad2.dpad_up){
+
+            if (gamepad2.dpad_up) {
                 armMotor.setTargetPosition(-3580);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
                 pos = armMotor.getCurrentPosition();
-                 
+
             }
-            
-            
-            if(pick){
-                
+
+
+            if (pick) {
+
                 pos = armMotor.getCurrentPosition();
-                
-            }if(!pick && !lock && !Sbut && !Abut && flag && !gamepad2.dpad_up){
+
+            }
+            if (!pick && !lock && !Sbut && !Abut && flag && !gamepad2.dpad_up) {
                 armMotor.setTargetPosition(pos);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(0.45);
-                
+
             }
-            
-            if(!armMotor.isBusy() && pick){
+
+            if (!armMotor.isBusy() && pick) {
                 armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 armMotor.setPower(armPower);
             }
-            if(!wristMotor.isBusy() && !lock){
+            if (!wristMotor.isBusy() && !lock) {
                 wristMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 wristMotor.setPower(wristPower);
             }
-            
-            
-            if(dist.getDistance(DistanceUnit.CM) < 40){
+
+
+            if (dist.getDistance(DistanceUnit.CM) < 40) {
                 // Decrease mod in proportion to dist
                 mod = dist.getDistance(DistanceUnit.CM) * 0.01; // You can adjust the multiplier as needed
 
 
             }
-            
-            
-            
-                
-            
-            
-            
-            
-            
-            leftFrontDrive.setPower(leftFrontPower*mod*mod2);
-            rightFrontDrive.setPower(rightFrontPower*mod*mod2);
-            leftBackDrive.setPower(leftBackPower*mod*mod2);
-            rightBackDrive.setPower(rightBackPower*mod*mod2);
-            
+            if (armMotor.getCurrentPosition() < -2000){
+                mod2 = 0.35;
+            }
+
+
+
+            leftFrontDrive.setPower(leftFrontPower * mod * mod2);
+            rightFrontDrive.setPower(rightFrontPower * mod * mod2);
+            leftBackDrive.setPower(leftBackPower * mod * mod2);
+            rightBackDrive.setPower(rightBackPower * mod * mod2);
+
             lift.setPower(liftPower);
-           
+
             claw2.setPosition(gate);
             claw4.setPosition(gamepad2.left_trigger);
-            
-            
-            
+
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
-            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
+            telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower * mod * mod2, rightFrontPower * mod * mod2);
+            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower * mod * mod2, rightBackPower * mod * mod2);
             //telemetry.addData("motor pos", pos);
             telemetry.addData("wristMotor pos", wristMotor.getCurrentPosition());
             telemetry.addData("armMotor tar", armMotor.getTargetPosition());
-            telemetry.addData("mod",mod);
-            telemetry.addData("mod2",mod2);
+            telemetry.addData("mod", mod);
+            telemetry.addData("mod2", mod2);
             telemetry.addData("armDist", dist.getDistance(DistanceUnit.CM));
             telemetry.addData("dist2", sen.getDistance(DistanceUnit.CM));
-            
+
             telemetry.update();
+
         }
-    }}
+    }
+
+}
