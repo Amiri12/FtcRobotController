@@ -189,7 +189,7 @@ public class RightFar extends LinearOpMode {
         telemetry.update();
         sleep(1000);
         while(DLF && DTF && CRF && DRF && CLF){
-            bot.forward(0.3);
+            bot.forward(0.2);
             pos = LeftFrontDrive.getCurrentPosition();
             telemetry.addData("redR", senR.red());
             telemetry.addData("redL", senL.red());
@@ -200,8 +200,8 @@ public class RightFar extends LinearOpMode {
             telemetry.update();
             //CLF = !(senL.red() > senL.green() && senL.red() > 20);
             //CRF = !(senR.red() > senR.green() && senL.red() > 20);
-            DLF = isClose(senL.getDistance(DistanceUnit.CM), THRESH);
-            DRF = Double.isNaN(senR.getDistance(DistanceUnit.CM));
+            DLF = !isClose(senL.getDistance(DistanceUnit.CM), THRESH);
+            DRF = !isClose(senR.getDistance(DistanceUnit.CM), THRESH);
             DTF = pos < tar;
         }
 
@@ -232,6 +232,17 @@ public class RightFar extends LinearOpMode {
         if(!DRF){
             state = 3;
         }
+        telemetry.addData("Path", "Complete");
+        telemetry.addData("pos", LeftFrontDrive.getCurrentPosition());
+        telemetry.addData("CLF",CLF);
+        telemetry.addData("DTF",DTF);
+        telemetry.addData("CRF",CRF);
+        telemetry.addData("DLF",DLF);
+        telemetry.addData("DRF",DRF);
+        telemetry.addData("state", state);
+        telemetry.addData("senR", Double.isNaN(senR.getDistance(DistanceUnit.CM)));
+
+        telemetry.update();
 
 
         int Power = 1;
@@ -241,9 +252,9 @@ public class RightFar extends LinearOpMode {
                 DropperR.setPosition(0.75);
                 DropperL.setPosition(0.75);
                sleep(500);
-                bot.left(1000, 0.3);
+                bot.left(800, 0.3);
                 bot.forward(500, 0.3);
-                bot.right(3000, 0.3);
+                bot.right(8000, 0.3);
                 bot.leftTurn(1100, 0.3);
                 bot.left(700, 0.3);
                 armMotor.setTargetPosition(-3700);
@@ -286,24 +297,25 @@ public class RightFar extends LinearOpMode {
             DropperR.setPosition(0.75);
             DropperL.setPosition(0.75);
             sleep(500);
-            bot.left(1500, 0.3);
-            bot.forward(1400, 0.3);
-            bot.right(4000,0.3);
-            bot.leftTurn(1100, 0.3);
             bot.left(300, 0.3);
+            bot.forward(1400, 0.3);
+            bot.right(3600,0.2);
+            bot.leftTurn(1100, 0.2);
+            bot.left(1900, 0.2);
             armMotor.setTargetPosition(-3700);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             armMotor.setPower(1.0);
             sleep(1500);
-            bot.backwards(190, 0.15);
+
+            bot.backwards(400, 0.15);
             DropperM.setPosition(1.0);
             sleep(700);
              armMotor.setTargetPosition(-100);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             armMotor.setPower(.5);
             sleep(1500);
-            bot.right(300,0.2);
-            bot.backwards(500, 0.15);
+            bot.right(1450,0.2);
+            bot.backwards(900, 0.15);
             break;
 
             default:

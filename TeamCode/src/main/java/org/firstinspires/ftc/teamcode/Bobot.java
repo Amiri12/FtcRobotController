@@ -105,7 +105,7 @@ public class Bobot {
                 LBD.setPower(pow);
                 RBD.setPower(pow);
             }
-            if(runs > 100){
+            if(runs > 10000){
                 break;
             }
             
@@ -197,7 +197,7 @@ public class Bobot {
                 LBD.setPower(pow);
                 RBD.setPower(pow);
             }
-            if(runs > 100){
+            if(runs > 10000){
                 break;
             }
 
@@ -276,7 +276,7 @@ public class Bobot {
                 LBD.setPower(pow);
                 RBD.setPower(pow);
             }
-            if(runs > 100){
+            if(runs > 10000){
                 break;
             }
             
@@ -352,7 +352,7 @@ public class Bobot {
                 LBD.setPower(pow);
                 RBD.setPower(pow);
             }
-            if(runs > 100){
+            if(runs > 10000){
                 break;
             }
         }
@@ -418,7 +418,7 @@ public class Bobot {
                 LBD.setPower(pow);
                 RBD.setPower(pow);
             }
-            if(runs > 100){
+            if(runs > 10000){
                 break;
             }
         }
@@ -484,7 +484,7 @@ public class Bobot {
                 LBD.setPower(pow);
                 RBD.setPower(pow);
             }
-            if(runs > 100){
+            if(runs > 10000){
                 break;
             }
         }
