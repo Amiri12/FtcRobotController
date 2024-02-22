@@ -248,15 +248,15 @@ public class RightFar extends LinearOpMode {
         int Power = 1;
         switch(state){
             case 1:
-                bot.left(100, 0.3);
+                bot.left(1000, 0.3);
                 DropperR.setPosition(0.75);
                 DropperL.setPosition(0.75);
                sleep(500);
-                bot.left(800, 0.3);
+                bot.right(800, 0.3);
                 bot.forward(500, 0.3);
-                bot.right(8000, 0.3);
+                bot.right(3600, 0.3);
                 bot.leftTurn(1100, 0.3);
-                bot.left(700, 0.3);
+                bot.left(900, 0.3);
                 armMotor.setTargetPosition(-3700);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
