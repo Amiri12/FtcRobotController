@@ -352,7 +352,7 @@ public class Bobot {
                 LBD.setPower(pow);
                 RBD.setPower(pow);
             }
-            if(runs > 10000){
+            if(runs > 1000000){
                 break;
             }
         }

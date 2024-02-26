@@ -332,7 +332,8 @@ public class person2 extends LinearOpMode {
                         lock = false;
                         flag = true;
                         pos = armMotor.getCurrentPosition();
-                    } else {
+                    }
+                }else {
                         armMotor.setTargetPosition(-3200);
                         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         armMotor.setPower(1.0);
@@ -348,7 +349,7 @@ public class person2 extends LinearOpMode {
                             pos = armMotor.getCurrentPosition();
                         }
                     }
-                }
+
 
 
             }
@@ -437,7 +438,7 @@ public class person2 extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower * mod * mod2, rightFrontPower * mod * mod2);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower * mod * mod2, rightBackPower * mod * mod2);
-            //telemetry.addData("motor pos", pos);
+            telemetry.addData("tick", tick);
             telemetry.addData("wristMotor pos", wristMotor.getCurrentPosition());
             telemetry.addData("armMotor tar", armMotor.getTargetPosition());
             telemetry.addData("mod", mod);
