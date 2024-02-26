@@ -103,7 +103,7 @@ public class person2 extends LinearOpMode {
     private DcMotor wristMotor = null;
     private DcMotor SUCC = null;
     private DcMotor lift = null;
-    private AnalogInput temp = null;
+    private DigitalChannel lim = null;
     private CRServo claw = null;
     private CRServo claw1 = null;
     private CRServo claw3 = null;
@@ -127,7 +127,7 @@ public class person2 extends LinearOpMode {
         sen = hardwareMap.get(ColorRangeSensor.class, "sen1");
         lift = hardwareMap.get(DcMotor.class, "lift");
 
-        temp = hardwareMap.get(AnalogInput.class, "Temp");
+        lim = hardwareMap.get(DigitalChannel.class, "Lim");
         claw = hardwareMap.get(CRServo.class, "ser1");
         claw1 = hardwareMap.get(CRServo.class, "ser2");
         claw2 = hardwareMap.get(Servo.class, "ser3");
@@ -163,6 +163,7 @@ public class person2 extends LinearOpMode {
         claw.setDirection(CRServo.Direction.REVERSE);
         //armMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
         //wristMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        lim.setMode(DigitalChannel.Mode.INPUT);
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -175,6 +176,7 @@ public class person2 extends LinearOpMode {
         double Lval = 0;
         double Cval = 0;
         int tick = 1;
+        boolean wall = lim.getState();
         waitForStart();
         runtime.reset();
 
@@ -236,6 +238,10 @@ public class person2 extends LinearOpMode {
             }
             if (!Rbut) {
                 Cval = 0.0;
+            }
+
+            if(wall && pos < -2000){
+                axial = Math.max(axial, 0);
             }
 
 
