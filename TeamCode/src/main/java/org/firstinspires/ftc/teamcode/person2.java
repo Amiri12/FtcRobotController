@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -103,7 +104,7 @@ public class person2 extends LinearOpMode {
     private DcMotor wristMotor = null;
     private DcMotor SUCC = null;
     private DcMotor lift = null;
-    private DigitalChannel lim = null;
+    private TouchSensor lim = null;
     private CRServo claw = null;
     private CRServo claw1 = null;
     private CRServo claw3 = null;
@@ -127,7 +128,7 @@ public class person2 extends LinearOpMode {
         sen = hardwareMap.get(ColorRangeSensor.class, "sen1");
         lift = hardwareMap.get(DcMotor.class, "lift");
 
-        lim = hardwareMap.get(DigitalChannel.class, "Lim");
+        lim = hardwareMap.get(TouchSensor.class, "Lim");
         claw = hardwareMap.get(CRServo.class, "ser1");
         claw1 = hardwareMap.get(CRServo.class, "ser2");
         claw2 = hardwareMap.get(Servo.class, "ser3");
@@ -163,7 +164,7 @@ public class person2 extends LinearOpMode {
         claw.setDirection(CRServo.Direction.REVERSE);
         //armMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
         //wristMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        lim.setMode(DigitalChannel.Mode.INPUT);
+
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -176,7 +177,7 @@ public class person2 extends LinearOpMode {
         double Lval = 0;
         double Cval = 0;
         int tick = 1;
-        boolean wall = lim.getState();
+        boolean wall = lim.isPressed();
         waitForStart();
         runtime.reset();
 
