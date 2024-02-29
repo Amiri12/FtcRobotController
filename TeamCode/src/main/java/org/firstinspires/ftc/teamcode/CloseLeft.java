@@ -149,9 +149,9 @@ public class CloseLeft extends LinearOpMode {
                 RightBackDrive.getCurrentPosition());
                 telemetry.addData("dist", senL.getDistance(DistanceUnit.CM));
         telemetry.update();
-        DropperR.setPosition(0.3);
-        DropperL.setPosition(0.3);
-        DropperM.setPosition(0.3);
+        DropperR.setPosition(0.5);
+        DropperL.setPosition(0.5);
+        DropperM.setPosition(0.5);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         bot.forward(800, 0.4);
@@ -243,20 +243,20 @@ public class CloseLeft extends LinearOpMode {
               sleep(500);
               bot.left(1500, 0.3);
               bot.rightTurn(1100, 0.3);
-              armMotor.setTargetPosition(-3000);
+              armMotor.setTargetPosition(-3600);
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(1.0);
               sleep(1500);
-              bot.right(300,0.2);
-              bot.backwards(190, 0.15);
+              bot.left(250,0.2);
+              bot.backwards(200, 0.15);
               DropperM.setPosition(1.0);
               sleep(700);
               armMotor.setTargetPosition(-100);
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(.5);
               sleep(700);
-              bot.right(900,0.2);
-              bot.backwards(500, 0.15);
+              bot.right(1600,0.2);
+              bot.backwards(300, 0.15);
               break;
           case 2:
               bot.left(350, 0.3);
@@ -265,12 +265,13 @@ public class CloseLeft extends LinearOpMode {
               sleep(500);
               bot.left(750, 0.3);
               bot.rightTurn(1100, 0.3);
-              armMotor.setTargetPosition(-3000);
+              armMotor.setTargetPosition(-3700);
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(1.0);
               sleep(700);
               bot.right(400,0.3);
               bot.backwards(300, 0.15);
+              sleep(1000);
               DropperM.setPosition(1.0);
               sleep(700);
               armMotor.setTargetPosition(-100);
@@ -285,11 +286,14 @@ public class CloseLeft extends LinearOpMode {
               DropperR.setPosition(0.75);
               DropperL.setPosition(0.75);
               sleep(500);
+              DropperR.setPosition(0.5);
+              DropperL.setPosition(0.5);
               bot.left(300, 0.3);
               bot.rightTurn(1100, 0.3);
-              armMotor.setTargetPosition(-3000);
+              armMotor.setTargetPosition(-3600);
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(1.0);
+              bot.forward(100, 0.3);
               sleep(700);
               bot.right(300, 0.3);
               bot.backwards(190, 0.15);
@@ -299,8 +303,8 @@ public class CloseLeft extends LinearOpMode {
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(.5);
               sleep(700);
-              bot.right(300,0.2);
-              bot.backwards(300, 0.15);
+              bot.right(1000,0.2);
+              bot.backwards(700, 0.15);
           break;
           default:
           bot.backwards(790, 0.3);
