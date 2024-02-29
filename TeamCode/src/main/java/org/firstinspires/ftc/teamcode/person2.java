@@ -35,7 +35,6 @@ import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -104,7 +103,7 @@ public class person2 extends LinearOpMode {
     private DcMotor wristMotor = null;
     private DcMotor SUCC = null;
     private DcMotor lift = null;
-    private TouchSensor lim = null;
+    private DigitalChannel lim = null;
     private CRServo claw = null;
     private CRServo claw1 = null;
     private CRServo claw3 = null;
@@ -112,6 +111,7 @@ public class person2 extends LinearOpMode {
     private Servo claw2 = null;
     private ColorRangeSensor sen = null;
     private DistanceSensor dist = null;
+
 
     @Override
     public void runOpMode() {
@@ -128,7 +128,7 @@ public class person2 extends LinearOpMode {
         sen = hardwareMap.get(ColorRangeSensor.class, "sen1");
         lift = hardwareMap.get(DcMotor.class, "lift");
 
-        lim = hardwareMap.get(TouchSensor.class, "Lim");
+        lim = hardwareMap.get(DigitalChannel.class, "Lim");
         claw = hardwareMap.get(CRServo.class, "ser1");
         claw1 = hardwareMap.get(CRServo.class, "ser2");
         claw2 = hardwareMap.get(Servo.class, "ser3");
@@ -164,7 +164,7 @@ public class person2 extends LinearOpMode {
         claw.setDirection(CRServo.Direction.REVERSE);
         //armMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
         //wristMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
-
+        lim.setMode(DigitalChannel.Mode.INPUT);
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -177,7 +177,7 @@ public class person2 extends LinearOpMode {
         double Lval = 0;
         double Cval = 0;
         int tick = 1;
-        boolean wall = lim.isPressed();
+
         waitForStart();
         runtime.reset();
 
@@ -199,6 +199,7 @@ public class person2 extends LinearOpMode {
             double Ltrig = gamepad2.left_trigger;
             boolean modF = gamepad1.left_bumper;
             boolean scorePos = gamepad1.dpad_left;
+            boolean wall = lim.getState();
             double mod = 1.0;
             double mod2 = 1.0;
 
@@ -420,7 +421,7 @@ public class person2 extends LinearOpMode {
 
             if (dist.getDistance(DistanceUnit.CM) < 40) {
                 // Decrease mod in proportion to dist
-                mod = dist.getDistance(DistanceUnit.CM) * 0.01; // You can adjust the multiplier as needed
+                mod = dist.getDistance(DistanceUnit.CM) * 0.03; // You can adjust the multiplier as needed
 
 
             }
@@ -452,6 +453,7 @@ public class person2 extends LinearOpMode {
             telemetry.addData("mod2", mod2);
             telemetry.addData("armDist", dist.getDistance(DistanceUnit.CM));
             telemetry.addData("dist2", sen.getDistance(DistanceUnit.CM));
+            telemetry.addData("lim", wall);
 
             telemetry.update();
 
