@@ -35,6 +35,8 @@ import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -102,7 +104,7 @@ public class person2 extends LinearOpMode {
     private DcMotor armMotor = null;
     private DcMotor wristMotor = null;
     private DcMotor SUCC = null;
-    private DcMotor lift = null;
+    private DcMotorEx lift = null;
     private DigitalChannel lim = null;
     private CRServo claw = null;
     private CRServo claw1 = null;
@@ -111,6 +113,8 @@ public class person2 extends LinearOpMode {
     private Servo claw2 = null;
     private ColorRangeSensor sen = null;
     private DistanceSensor dist = null;
+    private Gamepad.RumbleEffect rumble = null;
+    private Gamepad.RumbleEffect.Builder steps = null;
 
 
     @Override
@@ -126,7 +130,7 @@ public class person2 extends LinearOpMode {
         wristMotor = hardwareMap.get(DcMotor.class, "WM");
         SUCC = hardwareMap.get(DcMotor.class, "SU");
         sen = hardwareMap.get(ColorRangeSensor.class, "sen1");
-        lift = hardwareMap.get(DcMotor.class, "lift");
+        lift = hardwareMap.get(DcMotorEx.class, "lift");
 
         lim = hardwareMap.get(DigitalChannel.class, "Lim");
         claw = hardwareMap.get(CRServo.class, "ser1");
@@ -163,12 +167,15 @@ public class person2 extends LinearOpMode {
         //claw1.setDirection(Servo.Direction.FORWARD);
         claw.setDirection(CRServo.Direction.REVERSE);
         //armMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        //wristMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        //lift.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lim.setMode(DigitalChannel.Mode.INPUT);
-
+        steps = new Gamepad.RumbleEffect.Builder();
+        steps.addStep(0.3,0.3,100);
+        rumble = steps.build();
 
         // Wait for the game to start (driver presses PLAY)
-        telemetry.addData("Status", "Initialized");
+         telemetry.addData("Status", "Initialized");
         telemetry.update();
         int pos = -400;
         boolean flag = true;
@@ -177,6 +184,10 @@ public class person2 extends LinearOpMode {
         double Lval = 0;
         double Cval = 0;
         int tick = 1;
+        boolean planeFlag = true;
+        boolean planeLock = false;
+        boolean hangFlag = false;
+        double flagTime = 0.0;
 
         waitForStart();
         runtime.reset();
@@ -186,7 +197,7 @@ public class person2 extends LinearOpMode {
             double max;
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-            double axial = gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+            double axial = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral = -gamepad1.right_stick_x;
             double yaw = gamepad1.left_stick_x;
             boolean Abut = gamepad2.a;
@@ -222,6 +233,9 @@ public class person2 extends LinearOpMode {
             if (flag) {
                 lock = gamepad2.left_bumper;
             }
+            if(planeFlag){
+                planeLock = gamepad2.dpad_up;
+            }
             if (modF) {
                 mod = 0.25;
 
@@ -229,21 +243,22 @@ public class person2 extends LinearOpMode {
                 mod = 1.0;
             }
 
-            if (Lbut) {
-                Lval = 1.0;
+            if (Lbut && runtime.seconds() > 10) {
+                lift.setTargetPosition(-9100);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(1.0);
             }
-            if (!Lbut) {
-                Lval = 0.0;
+
+            if (Rbut && runtime.seconds() > 10) {
+                lift.setTargetPosition(0);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(1.0);
             }
-            if (Rbut) {
-                Cval = -1.0;
-            }
-            if (!Rbut) {
-                Cval = 0.0;
-            }
+
 
             if(wall && pos < -2000){
                 axial = Math.max(axial, 0);
+                gamepad1.runRumbleEffect(rumble);
             }
 
 
@@ -388,12 +403,38 @@ public class person2 extends LinearOpMode {
 
             }
 
-            if (gamepad2.dpad_up) {
-                armMotor.setTargetPosition(-3580);
+            if (planeLock && !lock && runtime.seconds() > 10) {
+                planeLock = true;
+                planeFlag = false;
+                armMotor.setTargetPosition(-1300);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(1.0);
+                lift.setTargetPosition(-9100);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(1.0);
                 pos = armMotor.getCurrentPosition();
+                if (armMotor.getCurrentPosition() < -1200 ) {
+                    planeLock = false;
+                    planeFlag = true;
+                    pos = armMotor.getCurrentPosition();
+                }
 
+
+            }
+
+            if(runtime.seconds() > 5){
+                claw4.setPosition(gamepad2.left_trigger);
+                if( claw4.getPosition() > 0.90 && !hangFlag){
+                    hangFlag = true;
+                    flagTime = runtime.seconds();
+                }
+            }
+
+            if(hangFlag && runtime.seconds() - flagTime >= 2){
+                armMotor.setTargetPosition(-300);
+                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                armMotor.setPower(0.6);
+                pos = armMotor.getCurrentPosition();
             }
 
 
@@ -402,7 +443,7 @@ public class person2 extends LinearOpMode {
                 pos = armMotor.getCurrentPosition();
 
             }
-            if (!pick && !lock && !Sbut && !Abut && flag && !gamepad2.dpad_up) {
+            if (!pick && !lock && !Sbut && !Abut && flag && !planeLock && planeFlag && !hangFlag) {
                 armMotor.setTargetPosition(pos);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(0.45);
@@ -436,10 +477,10 @@ public class person2 extends LinearOpMode {
             leftBackDrive.setPower(leftBackPower * mod * mod2);
             rightBackDrive.setPower(rightBackPower * mod * mod2);
 
-            lift.setPower(liftPower);
+            //lift.setPower(liftPower);
 
             claw2.setPosition(gate);
-            claw4.setPosition(gamepad2.left_trigger);
+
 
 
             // Show the elapsed game time and wheel power.
@@ -449,11 +490,15 @@ public class person2 extends LinearOpMode {
             telemetry.addData("tick", tick);
             telemetry.addData("wristMotor pos", wristMotor.getCurrentPosition());
             telemetry.addData("armMotor tar", armMotor.getTargetPosition());
+            telemetry.addData("lift pos", lift.getMode());
+            telemetry.addData("lift power", liftPower);
             telemetry.addData("mod", mod);
             telemetry.addData("mod2", mod2);
             telemetry.addData("armDist", dist.getDistance(DistanceUnit.CM));
             telemetry.addData("dist2", sen.getDistance(DistanceUnit.CM));
             telemetry.addData("lim", wall);
+            telemetry.addData("lock", lock);
+            telemetry.addData("planeLock", planeLock);
 
             telemetry.update();
 

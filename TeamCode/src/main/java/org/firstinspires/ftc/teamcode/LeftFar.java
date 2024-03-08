@@ -243,19 +243,22 @@ public class LeftFar extends LinearOpMode {
               sleep(500);
               bot.right(500, 0.3);
               bot.forward(500, 0.3);
-              bot.left(3000, 0.3);
+              bot.left(3900, 0.3);
               bot.rightTurn(1100, 0.3);
               bot.right(700, 0.3);
-              armMotor.setTargetPosition(-3000);
+              armMotor.setTargetPosition(-3700);
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(1.0);
               sleep(1500);
-              bot.left(190, 0.15);
+              bot.backwards(190, 0.15);
               DropperM.setPosition(1.0);
               sleep(700);
                armMotor.setTargetPosition(-100);
               armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               armMotor.setPower(.5);
+              sleep(500);
+              bot.left(700,0.2);
+              bot.backwards(900, 0.15);
               break;
           case 2:
               bot.right(350, 0.3);
@@ -284,12 +287,12 @@ public class LeftFar extends LinearOpMode {
           DropperR.setPosition(0.75);
           DropperL.setPosition(0.75);
           sleep(500);
-          bot.right(1500, 0.3);
+          bot.right(300, 0.3);
           bot.forward(1400, 0.3);
           bot.left(4000,0.3);
           bot.rightTurn(1100, 0.3);
-          bot.right(300, 0.3);
-          armMotor.setTargetPosition(-3000);
+          bot.right(2400, 0.3);
+          armMotor.setTargetPosition(-3700);
           armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
           armMotor.setPower(1.0);
           sleep(1500);
@@ -300,8 +303,8 @@ public class LeftFar extends LinearOpMode {
           armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
           armMotor.setPower(.5);
           sleep(1500);
-          bot.left(300,0.2);
-          //bot.forward(500, 0.15);
+          bot.left(1450,0.2);
+          bot.backwards(900, 0.15);
           break;
           default:
           bot.backwards(790, 0.3);
