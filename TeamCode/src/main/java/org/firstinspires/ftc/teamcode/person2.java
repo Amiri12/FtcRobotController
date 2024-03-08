@@ -106,6 +106,7 @@ public class person2 extends LinearOpMode {
     private DcMotor SUCC = null;
     private DcMotorEx lift = null;
     private DigitalChannel lim = null;
+    private DigitalChannel lim1 = null;
     private CRServo claw = null;
     private CRServo claw1 = null;
     private CRServo claw3 = null;
@@ -132,7 +133,9 @@ public class person2 extends LinearOpMode {
         sen = hardwareMap.get(ColorRangeSensor.class, "sen1");
         lift = hardwareMap.get(DcMotorEx.class, "lift");
 
+
         lim = hardwareMap.get(DigitalChannel.class, "Lim");
+        lim1 = hardwareMap.get(DigitalChannel.class, "Lim1");
         claw = hardwareMap.get(CRServo.class, "ser1");
         claw1 = hardwareMap.get(CRServo.class, "ser2");
         claw2 = hardwareMap.get(Servo.class, "ser3");
@@ -170,6 +173,7 @@ public class person2 extends LinearOpMode {
         //lift.setMode(DcMotor.RunMode.RESET_ENCODERS);
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lim.setMode(DigitalChannel.Mode.INPUT);
+        lim1.setMode(DigitalChannel.Mode.INPUT);
         steps = new Gamepad.RumbleEffect.Builder();
         steps.addStep(0.3,0.3,100);
         rumble = steps.build();
@@ -210,7 +214,7 @@ public class person2 extends LinearOpMode {
             double Ltrig = gamepad2.left_trigger;
             boolean modF = gamepad1.left_bumper;
             boolean scorePos = gamepad1.dpad_left;
-            boolean wall = lim.getState();
+            boolean wall = lim.getState() || lim.getState();
             double mod = 1.0;
             double mod2 = 1.0;
 
