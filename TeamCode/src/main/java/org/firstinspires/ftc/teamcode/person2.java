@@ -214,7 +214,7 @@ public class person2 extends LinearOpMode {
             double Ltrig = gamepad2.left_trigger;
             boolean modF = gamepad1.left_bumper;
             boolean scorePos = gamepad1.dpad_left;
-            boolean wall = lim.getState() || lim.getState();
+            boolean wall = false;
             double mod = 1.0;
             double mod2 = 1.0;
 
@@ -224,7 +224,7 @@ public class person2 extends LinearOpMode {
 
             scoreNeg = !scorePos;
             // Decrease mod2 in proportion to gamepad1.right_trigger
-            mod2 -= gamepad1.right_trigger * 0.4; // You can adjust the multiplier as needed
+            mod2 -= gamepad1.left_trigger * 0.7; // You can adjust the multiplier as needed
 
             // Ensure mod2 does not go below 0
             mod2 = Math.max(mod2, 0.0);
@@ -381,17 +381,17 @@ public class person2 extends LinearOpMode {
 
             }
             if (Sbut) {
-                armMotor.setTargetPosition(50);
+                armMotor.setTargetPosition(-100);
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(1.0);
+                armMotor.setPower(0.6);
                 wristMotor.setTargetPosition(500);
                 wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                wristMotor.setPower(0.3);
+                wristMotor.setPower(0.7);
                 pos = armMotor.getCurrentPosition();
                 if (armMotor.getCurrentPosition() < 100) {
                     wristMotor.setTargetPosition(300);
                     wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    wristMotor.setPower(0.4);
+                    wristMotor.setPower(0.7);
                 }
             }
 
@@ -407,7 +407,7 @@ public class person2 extends LinearOpMode {
 
             }
 
-            if (planeLock && !lock && runtime.seconds() > 10) {
+            if (planeLock && !lock && runtime.seconds() > 60) {
                 planeLock = true;
                 planeFlag = false;
                 armMotor.setTargetPosition(-1300);
@@ -426,7 +426,7 @@ public class person2 extends LinearOpMode {
 
             }
 
-            if(runtime.seconds() > 5){
+            if(runtime.seconds() > 60){
                 claw4.setPosition(gamepad2.left_trigger);
                 if( claw4.getPosition() > 0.90 && !hangFlag){
                     hangFlag = true;

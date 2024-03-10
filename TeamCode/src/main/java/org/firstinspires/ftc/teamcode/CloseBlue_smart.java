@@ -30,11 +30,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -66,10 +64,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="FarRed_Smart", group="Robot")
+@Autonomous(name="CloseBlue_smart", group="Robot")
 
 
-public class RightFar extends LinearOpMode {
+public class CloseBlue_smart extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor         LeftFrontDrive   = null;
@@ -98,7 +96,7 @@ public class RightFar extends LinearOpMode {
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.5;
+    static final double     TURN_SPEED              = 0.3;
     static final double     THRESH = 20;
 
     @Override
@@ -154,7 +152,7 @@ public class RightFar extends LinearOpMode {
         DropperM.setPosition(0.5);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        bot.forward(800, 0.2);
+        bot.forward(800, 0.4);
         int sqr = 1000;
         sleep(500);
         boolean CRF = true;
@@ -172,7 +170,7 @@ public class RightFar extends LinearOpMode {
         driveLeft(sqr);
         */
 
-        int tar = LeftFrontDrive.getCurrentPosition() + 700;
+        int tar = LeftFrontDrive.getCurrentPosition() + 680;
         int pos = LeftFrontDrive.getCurrentPosition();
         int star = LeftFrontDrive.getCurrentPosition();
         int state = 0;
@@ -189,7 +187,7 @@ public class RightFar extends LinearOpMode {
         telemetry.update();
         sleep(1000);
         while(DLF && DTF && CRF && DRF && CLF){
-            bot.forward(0.2);
+            bot.forward(0.3);
             pos = LeftFrontDrive.getCurrentPosition();
             telemetry.addData("redR", senR.red());
             telemetry.addData("redL", senL.red());
@@ -217,116 +215,101 @@ public class RightFar extends LinearOpMode {
         //DropperL.setPosition(0.75);
         sleep(1000);
         //bot.backwards(pos - star, 0.3);
-        if(!CLF){
+        if(!CRF){
             state = 1;
         }
         if(!DTF){
             state = 2;
         }
-        if(!CRF){
+        if(!CLF){
             state = 3;
-        }
-        if(!DLF){
-            state = 1;
         }
         if(!DRF){
+            state = 1;
+        }
+        if(!DLF){
             state = 3;
         }
-        telemetry.addData("Path", "Complete");
-        telemetry.addData("pos", LeftFrontDrive.getCurrentPosition());
-        telemetry.addData("CLF",CLF);
-        telemetry.addData("DTF",DTF);
-        telemetry.addData("CRF",CRF);
-        telemetry.addData("DLF",DLF);
-        telemetry.addData("DRF",DRF);
-        telemetry.addData("state", state);
-        telemetry.addData("senR", Double.isNaN(senR.getDistance(DistanceUnit.CM)));
-
-        telemetry.update();
 
 
         int Power = 1;
-        switch(state){
-            case 1:
-                bot.left(1000, 0.3);
-                DropperR.setPosition(0.75);
-                DropperL.setPosition(0.75);
-               sleep(500);
-                bot.left(100, 0.3);
-                bot.forward(960, 0.3);
-                bot.right(3900, 0.3);
-                bot.leftTurn(1100, 0.3);
-                bot.left(600, 0.3);
-                armMotor.setTargetPosition(-3700);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(1.0);
-                sleep(1500);
-                //bot.right(300,0.2);
-                bot.backwards(1000, 0.25);
-                DropperM.setPosition(1.0);
-                sleep(700);
-                 armMotor.setTargetPosition(-100);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(.5);
-                sleep(500);
-                bot.right(700,0.2);
-                bot.backwards(900, 0.15);
-                break;
-
-            case 2:
-                bot.left(350, 0.3);
-                //bot.forward(300, 0.3);
-                DropperR.setPosition(0.75);
-                DropperL.setPosition(0.75);
-                sleep(500);
-                bot.forward(500, 0.3);
-                bot.right(2000, 0.3);
-                bot.leftTurn(1100, 0.3);
-                bot.left(700, 0.3);
-                armMotor.setTargetPosition(-3700);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(1.0);
-                sleep(1500);
-                bot.backwards(190, 0.15);
-                DropperM.setPosition(1.0);
-                sleep(700);
-                armMotor.setTargetPosition(-100);
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armMotor.setPower(.5);
-                sleep(500);
-                bot.right(650,0.2);
-                bot.backwards(900, 0.15);
-                break;
-
-            case 3:
-            bot.right(100, 0.3);
-            DropperR.setPosition(0.75);
-            DropperL.setPosition(0.75);
-            sleep(500);
-            bot.left(300, 0.3);
-            bot.forward(1400, 0.3);
-            bot.right(3600,0.2);
-            bot.leftTurn(1100, 0.2);
-            bot.left(1900, 0.2);
-            armMotor.setTargetPosition(-3700);
-            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            armMotor.setPower(1.0);
-            sleep(1500);
-
-            bot.backwards(400, 0.15);
-            DropperM.setPosition(1.0);
-            sleep(700);
-             armMotor.setTargetPosition(-100);
-            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            armMotor.setPower(.5);
-            sleep(1500);
-            bot.right(1450,0.2);
-            bot.backwards(900, 0.15);
-            break;
-
-            default:
-            bot.right(1000, 0.3);
-        }
+      switch(state){
+          case 1:
+              bot.right(100, 0.3);
+              DropperR.setPosition(0.75);
+              DropperL.setPosition(0.75);
+              sleep(500);
+              bot.left(1500, 0.3);
+              bot.rightTurn(1100, 0.3);
+              armMotor.setTargetPosition(-3600);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(1.0);
+              sleep(1500);
+              bot.left(250,0.2);
+              bot.backwards(200, 0.15);
+              DropperM.setPosition(1.0);
+              sleep(700);
+              armMotor.setTargetPosition(-100);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(.5);
+              sleep(700);
+              bot.right(1600,0.2);
+              bot.backwards(300, 0.15);
+              break;
+          case 2:
+              bot.left(350, 0.3);
+              DropperR.setPosition(0.75);
+              DropperL.setPosition(0.75);
+              sleep(500);
+              bot.left(750, 0.3);
+              bot.rightTurn(1100, 0.3);
+              armMotor.setTargetPosition(-3700);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(1.0);
+              sleep(700);
+              bot.right(400,0.3);
+              bot.backwards(300, 0.15);
+              sleep(1000);
+              DropperM.setPosition(1.0);
+              sleep(700);
+              armMotor.setTargetPosition(-100);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(.5);
+              sleep(700);
+              bot.right(1200,0.2);
+              bot.backwards(900, 0.15);
+              break;
+          case 3:
+              bot.left(1100, 0.3);
+              DropperR.setPosition(0.75);
+              DropperL.setPosition(0.75);
+              sleep(500);
+              DropperR.setPosition(0.5);
+              DropperL.setPosition(0.5);
+              bot.left(300, 0.3);
+              bot.rightTurn(1100, 0.3);
+              armMotor.setTargetPosition(-3600);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(1.0);
+              bot.forward(100, 0.3);
+              sleep(700);
+              bot.right(300, 0.3);
+              bot.backwards(190, 0.15);
+              DropperM.setPosition(1.0);
+              sleep(700);
+              armMotor.setTargetPosition(-100);
+              armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+              armMotor.setPower(.5);
+              sleep(700);
+              bot.right(1000,0.2);
+              bot.backwards(700, 0.15);
+          break;
+          default:
+          bot.backwards(790, 0.3);
+          driveForward(100);
+          sleep (500);
+          driveLeft(2300);
+      }
 
         double mats = 2;
         double dis = 23.5 * mats;
@@ -357,10 +340,10 @@ public class RightFar extends LinearOpMode {
     public void driveForward(int driveTime) {
 
 
-        LeftFrontDrive.setPower(0.5);
-        LeftBackDrive.setPower(0.5);
-        RightFrontDrive.setPower(0.5);
-        RightBackDrive.setPower(0.5);
+        LeftFrontDrive.setPower(0.3);
+        LeftBackDrive.setPower(0.3);
+        RightFrontDrive.setPower(0.3);
+        RightBackDrive.setPower(0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);
@@ -371,10 +354,10 @@ public class RightFar extends LinearOpMode {
 
     public void driveBack(int driveTime) {
 
-        LeftFrontDrive.setPower(-0.5);
-        LeftBackDrive.setPower(-0.5);
-        RightFrontDrive.setPower(-0.5);
-        RightBackDrive.setPower(-0.5);
+        LeftFrontDrive.setPower(-0.3);
+        LeftBackDrive.setPower(-0.3);
+        RightFrontDrive.setPower(-0.3);
+        RightBackDrive.setPower(-0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);
@@ -385,10 +368,10 @@ public class RightFar extends LinearOpMode {
 
     public void driveRight(int driveTime) {
 
-        LeftFrontDrive.setPower(0.5);
-        LeftBackDrive.setPower(-0.5);
-        RightFrontDrive.setPower(-0.5);
-        RightBackDrive.setPower(0.5);
+        LeftFrontDrive.setPower(0.3);
+        LeftBackDrive.setPower(-0.3);
+        RightFrontDrive.setPower(-0.3);
+        RightBackDrive.setPower(0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);
@@ -399,10 +382,10 @@ public class RightFar extends LinearOpMode {
 
     public void driveLeft(int driveTime) {
 
-        LeftFrontDrive.setPower(-0.5);
-        LeftBackDrive.setPower(0.5);
-        RightFrontDrive.setPower(0.5);
-        RightBackDrive.setPower(-0.5);
+        LeftFrontDrive.setPower(-0.3);
+        LeftBackDrive.setPower(0.3);
+        RightFrontDrive.setPower(0.3);
+        RightBackDrive.setPower(-0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);
@@ -412,10 +395,10 @@ public class RightFar extends LinearOpMode {
     }
     public void turnRight(int driveTime) {
 
-        LeftFrontDrive.setPower(0.5);
-        LeftBackDrive.setPower(0.5);
-        RightFrontDrive.setPower(-0.5);
-        RightBackDrive.setPower(-0.5);
+        LeftFrontDrive.setPower(0.3);
+        LeftBackDrive.setPower(0.3);
+        RightFrontDrive.setPower(-0.3);
+        RightBackDrive.setPower(-0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);
@@ -425,10 +408,10 @@ public class RightFar extends LinearOpMode {
     }
     public void turnLeft(int driveTime) {
 
-        LeftFrontDrive.setPower(-0.5);
-        LeftBackDrive.setPower(-0.5);
-        RightFrontDrive.setPower(0.5);
-        RightBackDrive.setPower(0.5);
+        LeftFrontDrive.setPower(-0.3);
+        LeftBackDrive.setPower(-0.3);
+        RightFrontDrive.setPower(0.3);
+        RightBackDrive.setPower(0.3);
         sleep(driveTime);
         LeftFrontDrive.setPower(0);
         LeftBackDrive.setPower(0);

@@ -10,19 +10,18 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 public class Bobot {
-    
-    private DcMotor LFD = null;
-    private DcMotor RFD = null;
-    private DcMotor LBD = null;
-    private DcMotor RBD = null;
-    private int posLF;
-    private int posRF;
-    private int posLB;
-    private int posRB;
-    private int pos;
 
-    private int runs;
-    
+        private DcMotor LFD = null;
+        private DcMotor RFD = null;
+        private DcMotor LBD = null;
+        private DcMotor RBD = null;
+        private int posLF;
+        private int posRF;
+        private int posLB;
+        private int posRB;
+        private int pos;
+        private int runs;
+
     public Bobot(DcMotor lfd, DcMotor rfd, DcMotor lbd, DcMotor rbd){
         LFD = lfd;
         RFD = rfd;
@@ -34,6 +33,7 @@ public class Bobot {
         posRB = 0;
         pos = 0;
         runs = 0;
+
         LFD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RFD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LBD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -42,6 +42,7 @@ public class Bobot {
         LBD.setDirection(DcMotor.Direction.REVERSE);
         RFD.setDirection(DcMotor.Direction.REVERSE);
         RBD.setDirection(DcMotor.Direction.FORWARD);
+
     }
     
     public void forward (int dist, double pow){
